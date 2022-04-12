@@ -1,1 +1,40 @@
-<html></html>
+<html>
+
+<head>
+    <script type="text/javascript" src="./html5-qrcode.min.js"></script>
+</head>
+
+<body>
+    
+
+    farts
+    <div style="width: 500px" id="reader"></div>
+
+    <script type="text/javascript">
+        function docReady(fn) {
+            // see if DOM is already available
+            if (document.readyState === "complete" || document.readyState === "interactive") {
+                // call on next available tick
+                setTimeout(fn, 1);
+            } else {
+                document.addEventListener("DOMContentLoaded", fn);
+            }
+        }
+
+
+        docReady(function() {
+            console.log("ready");
+            function onScanSuccess(decodedText, decodedResult) {
+                // Handle on success condition with the decoded text or result.
+                console.log(`Scan result: ${decodedText}`, decodedResult);
+            }
+
+            var html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", { fps: 10, qrbox: 250 });
+            html5QrcodeScanner.render(onScanSuccess);
+        });
+    </script>
+
+</body>
+
+</html>
