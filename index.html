@@ -1,1 +1,146 @@
-hello world
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <style media="screen">
+      * {
+        font-family: 'Fredoka One', cursive;
+      }
+      div#canvas {
+          font-size: 26px;
+      }
+      input {
+          border-radius: 2em;
+          border: solid 1px #ccc;
+          padding: .5em;
+          font-size: 35px;
+          max-width: 4em;
+          text-align: center;
+      }
+      button {
+          font-size: 41px;
+          background-color: cadetblue;
+          border-radius: 2em;
+          padding: .08em .5em;
+          border: solid 1px;
+          margin-left: 14px;
+      }
+
+      #balls {
+        margin-top: 45px;
+      }
+      .row {
+        display: flex;
+        width: fit-content;
+      }
+      /* .row:hover .circle{
+        background-color: green;
+      } */
+      .circle{
+        border: solid 1px #333;
+        margin: 2px;
+        border-radius: 50%;
+        height: 7vw;
+        width: 7vw;
+        background: radial-gradient(circle at 8px 7px, #5cabff, #333);
+      }
+      .circle.active {
+        border: solid 1px red;
+        filter: hue-rotate(127deg);
+      }
+
+
+      #ballCount {
+          position: absolute;
+          right: 0px;
+          font-size: 4em;
+          padding: 0.1em;
+          top: 0px;
+          border: solid 1px olive;
+          border-radius: 0.25em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="canvas">
+
+      <div class="">
+        <input type="text" class="cols" value=""> X <input type="text" class="rows" value="">
+        <button type="button" name="calc">Go!</button>
+      </div>
+
+      <div id="balls"></div>
+
+      <div id="ballCount"></div>
+    </div>
+
+  </body>
+
+  <script type="text/javascript">
+    $(function(){
+
+      $('button[name="calc"]').click(e => {
+        $('#balls').html('');
+        let colsInput = parseInt($('input.cols').val());
+        let rowsInput = parseInt($('input.rows').val());
+        clearCount();
+        createGrid(colsInput, rowsInput);
+
+        $(".col").click((e) => {
+          makeActive(e);
+          updateCount();
+        });
+      })
+
+    });
+
+    let createCols = (num) => {
+      return Array.from(
+        Array(num), (i, val) =>
+          $('<div/>').addClass(`col col-${val}`)
+          .addClass('circle')
+          // .click(function(){$(this).addClass('active')})
+      )
+    }
+
+    let createRows = (num, cols) => {
+      let colHtml = cols.map(function(el){return el.get()[0].outerHTML});
+      return Array.from(Array(num), (i, val) =>{
+        return row = $('<div/>')
+          .addClass('row')
+          .addClass(`row-${val}`)
+          .html(colHtml);
+      })
+    }
+
+    let createGrid = (colsInput, rowsInput) => {
+      console.log(rowsInput);
+      let cols = createCols(colsInput);
+      let rows = createRows(rowsInput, cols);
+      $('#balls').append.apply($('#balls'), rows);
+    }
+
+    let makeActive = (el) => {
+      $(el.target).addClass('active');
+    }
+
+    let updateCount = () => {
+      let ballCount = $('.active').length;
+      $('#ballCount').html(ballCount);
+      if(ballCount == $(".circle").length) {
+        
+      }
+    }
+
+    let clearCount = () => {
+      $('#ballCount').html('0');
+    }
+
+  </script>
+
+
+
+</html>
