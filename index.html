@@ -5,6 +5,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <style media="screen">
+      body{
+        padding: .3em;
+      }
       * {
         font-family: 'Fredoka One', cursive;
       }
@@ -26,7 +29,13 @@
           padding: .08em .5em;
           border: solid 1px;
           margin-left: 14px;
+          transition: all 1s;
       }
+      button.next {
+        transform: scale(1.3);
+        background-color: coral;
+      }
+
 
       #balls {
         margin-top: 45px;
@@ -54,10 +63,10 @@
 
       #ballCount {
           position: absolute;
-          right: 0px;
+          right: .2em;
           font-size: 4em;
           padding: 0.1em;
-          top: 0px;
+          top: .1em;
           border: solid 1px olive;
           border-radius: 0.25em;
       }
@@ -80,10 +89,22 @@
   </body>
 
   <script type="text/javascript">
+    let currentGame = {
+      rows: '',
+      cols: '',
+      nextRows: '',
+      nextCols: ''
+    };
     $(function(){
 
+
+
       $('button[name="calc"]').click(e => {
+        $('button').removeClass('next');
         $('#balls').html('');
+        if(currentGame.nextRows){
+          $('input.rows').val(currentGame.nextRows);
+        }
         let colsInput = parseInt($('input.cols').val());
         let rowsInput = parseInt($('input.rows').val());
         clearCount();
@@ -131,7 +152,9 @@
       let ballCount = $('.active').length;
       $('#ballCount').html(ballCount);
       if(ballCount == $(".circle").length) {
-        
+        console.log(currentGame);
+        $("button").addClass('next');
+        currentGame.nextRows = parseInt($('input.rows').val()) + 1;
       }
     }
 
