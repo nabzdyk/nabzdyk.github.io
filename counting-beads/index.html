@@ -35,6 +35,9 @@
         display: flex;
         width: fit-content;
       }
+      .row:nth-child(2n) .circle{
+        opacity: .8;
+      }
       /* .row:hover .circle{
         background-color: green;
       } */
@@ -131,7 +134,7 @@
       let ballCount = $('.active').length;
       $('#ballCount').html(ballCount);
       if(ballCount == $(".circle").length) {
-        
+
       }
     }
 
